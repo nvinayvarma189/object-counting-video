@@ -7,6 +7,7 @@ import cv2
 from pathlib import Path
 from sort import Sort
 from typing import Dict, List
+import json
 
 
 class ObjectCounterVideo:
@@ -22,6 +23,7 @@ class ObjectCounterVideo:
         model_config_path="./yolo-coco/yolov3.cfg",
         input_video_path="./input/highway.mp4",
         output_video_path="./output/highway.avi",
+        output_json_path="./output/highway_objects.json",
         confidence_threshold=0.5,
         nms_threshold=0.1,
         objects_to_count=["car", "bus", "motorbike", "bicycle", "truck"],
@@ -37,6 +39,7 @@ class ObjectCounterVideo:
         self.line_coords = line_coords
         self.video_capture = cv2.VideoCapture(input_video_path)
         self.output_video_path = output_video_path
+        self.output_json_path = output_json_path
         self.instances_count = self.initialize_instance_counter(objects_to_count)
         self.tracker = Sort()
         self.net, self.ln = self.load_model(model_config_path, model_weights_path)
@@ -232,6 +235,9 @@ class ObjectCounterVideo:
             # write the output frame to disk
             self.video_writer.write(frame)
             frame_index += 1
+
+        with open(self.output_json_path, "w") as fp:
+            json.dump(self.instances_count, fp)
 
         print("[INFO] Finshed writing video...")
         self.video_writer.release()
