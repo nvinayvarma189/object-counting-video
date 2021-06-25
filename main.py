@@ -8,6 +8,7 @@ from pathlib import Path
 from sort import Sort
 from typing import Dict, List
 import json
+import fire
 
 
 class ObjectCounterVideo:
@@ -245,5 +246,4 @@ class ObjectCounterVideo:
 
 
 if __name__ == "__main__":
-    video_object_counter = ObjectCounterVideo()
-    video_object_counter.count_objects_in_video()
+    fire.Fire(ObjectCounterVideo)
