@@ -86,3 +86,4 @@ This repository is licensed with the [MIT License](https://github.com/nvinayvarm
 - [YoloV3 paper](https://arxiv.org/abs/1804.02767) and [Pretrained YoloV3 weights](https://pjreddie.com/media/files/yolov3.weights)
 - [Object Detection and Tracking blog post](https://towardsdatascience.com/object-detection-and-tracking-in-pytorch-b3cf1a696a98)
 - [SORT: A Simple, Online and Realtime Tracker](https://github.com/abewley/sort/blob/master/sort.py)
+- [Object counting using Yolo and Sort](https://github.com/HodenX/python-traffic-counter-with-yolo-and-sort)
