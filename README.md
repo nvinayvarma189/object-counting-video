@@ -28,7 +28,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-  A simple program to calculate the cumulative count of instances of one or more objects present in a video. Confidence thresholds, line placement, objects list, etc are customizable to make it as generic as possible
+  A simple program to calculate the cumulative count of instances of one or more objects present in a video. Confidence thresholds, line placement, objects list, etc are customizable to make it as generic as possible.
   
 ![counting_input](https://user-images.githubusercontent.com/30727381/123505490-0189db80-d67d-11eb-9c0f-9077c470fa08.png)
 ![counting_output](https://user-images.githubusercontent.com/30727381/123505493-051d6280-d67d-11eb-94d5-cce437d10b8b.png)
