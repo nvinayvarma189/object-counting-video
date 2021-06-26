@@ -3,3 +3,7 @@ numba==0.53.1
 scikit-learn==0.20.4
 opencv-python==4.4.0.46
 fire==0.4.0
+numpy==1.19.2
+pathlib==1.0.1
+typing==3.10.0.0
+filterpy==1.4.5

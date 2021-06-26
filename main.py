@@ -1,8 +1,6 @@
 # import the necessary packages
 import numpy as np
-import argparse
 import imutils
-import time
 import cv2
 from pathlib import Path
 from sort import Sort
@@ -142,7 +140,6 @@ class ObjectCounterVideo:
         except Exception as e:
             print(e)
             print("[INFO] could not determine # of frames in video")
-            print("[INFO] no approx. completion time can be provided")
             total_num_frames = -1
         return total_num_frames
 
