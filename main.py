@@ -6,7 +6,7 @@ import time
 import cv2
 from pathlib import Path
 from sort import Sort
-from typing import Dict, List
+from typing import Dict, List, Tuple, Any
 import json
 import fire
 
@@ -19,19 +19,48 @@ class ObjectCounterVideo:
 
     def __init__(
         self,
-        model_labels_path="./yolo-coco/coco.names",
-        model_weights_path="./yolo-coco/yolov3.weights",
-        model_config_path="./yolo-coco/yolov3.cfg",
-        input_video_path="./input/highway.mp4",
-        output_video_path="./output/highway.avi",
-        output_json_path="./output/highway_objects.json",
-        confidence_threshold=0.5,
-        nms_threshold=0.1,
-        objects_to_count=["car", "bus", "motorbike", "bicycle", "truck"],
-        line_coords=[(43, 543), (550, 655)],
-        line_color=(0, 255, 255),
-        line_width=5,
+        model_labels_path: str = "./yolo-coco/coco.names",
+        model_weights_path: str = "./yolo-coco/yolov3.weights",
+        model_config_path: str = "./yolo-coco/yolov3.cfg",
+        input_video_path: str = "./input/highway.mp4",
+        output_video_path: str = "./output/highway.avi",
+        output_json_path: str = "./output/highway_objects.json",
+        confidence_threshold: float = 0.5,
+        nms_threshold: float = 0.1,
+        objects_to_count: List = ["car", "bus", "motorbike", "bicycle", "truck"],
+        line_coords: List = [(43, 543), (550, 655)],
+        line_color: Tuple = (0, 255, 255),
+        line_width: int = 5,
     ):
+        """Class to count object instances a video
+
+        Parameters
+        ----------
+        model_labels_path : str, optional
+            path to file containing labels for the model, by default "./yolo-coco/coco.names"
+        model_weights_path : str, optional
+            path to model weights file, by default "./yolo-coco/yolov3.weights"
+        model_config_path : str, optional
+            path to model configuration file, by default "./yolo-coco/yolov3.cfg"
+        input_video_path : str, optional
+            path to input video, by default "./input/highway.mp4"
+        output_video_path : str, optional
+            path to output video, by default "./output/highway.avi"
+        output_json_path : str, optional
+            path to json file to which object instances count is written to, by default "./output/highway_objects.json"
+        confidence_threshold : float, optional
+            minimum confidence threshold for an object to be detected, by default 0.5
+        nms_threshold : float, optional
+            threshoid for eliminating weak and overalying boxes, by default 0.1
+        objects_to_count : List, optional
+            list of objects to count number of instances for, by default ["car", "bus", "motorbike", "bicycle", "truck"]
+        line_coords : List, optional
+            Coordinates of the line required for detecting intersections, by default [(43, 543), (550, 655)]
+        line_color : Tuple, optional
+            color of the line, by default (0, 255, 255)
+        line_width : int, optional
+            thickness of the line, by default 5
+        """
         self.labels = open(model_labels_path).read().strip().split("\n")
         self.confidence_threshold = confidence_threshold
         self.nms_threshold = nms_threshold
@@ -46,14 +75,40 @@ class ObjectCounterVideo:
         self.net, self.ln = self.load_model(model_config_path, model_weights_path)
 
     @staticmethod
-    def load_model(model_config_path, model_weights_path):
+    def load_model(model_config_path: str, model_weights_path: str) -> Tuple[Any, List]:
+        """Static Method to load the model into memory
+
+        Parameters
+        ----------
+        model_config_path : str
+            path to model configuration file
+        model_weights_path : str
+            path to model weights file
+
+        Returns
+        -------
+        Tuple[Any, List]
+            Tuple of model and output layer names
+        """
         net = cv2.dnn.readNetFromDarknet(model_config_path, model_weights_path)
         ln = net.getLayerNames()
         ln = [ln[i[0] - 1] for i in net.getUnconnectedOutLayers()]
         return net, ln
 
     @staticmethod
-    def initialize_instance_counter(objects_to_count):
+    def initialize_instance_counter(objects_to_count: List) -> Dict[str, int]:
+        """Static ethod to initialize counter values for classes to track
+
+        Parameters
+        ----------
+        objects_to_count : List
+            List of objects to keep a count
+
+        Returns
+        -------
+        Dict[str, int]
+            Dictionary for keeping the count of all required objects
+        """
         instances_count = {}
         for obj in objects_to_count:
             instances_count[obj] = 0
@@ -68,7 +123,14 @@ class ObjectCounterVideo:
             A, B, C
         ) != self._ccw(A, B, D)
 
-    def determine_number_of_frames_in_video(self):
+    def determine_number_of_frames_in_video(self) -> int:
+        """Method to determine the number of frames in a video
+
+        Returns
+        -------
+        int
+            Number of frames in the input video
+        """
         try:
             prop = (
                 cv2.cv.CV_CAP_PROP_FRAME_COUNT
@@ -85,6 +147,7 @@ class ObjectCounterVideo:
         return total_num_frames
 
     def count_objects_in_video(self):
+        """Method to detect, track, and count objects in the given input video"""
         frame_index = 0
         W, H = (None, None)
         self.determine_number_of_frames_in_video()
