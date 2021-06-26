@@ -1,4 +1,5 @@
-# object-counting-video
+
+# Object Counting Video
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -27,10 +28,12 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
+  A simple program to calculate the cumulative count of instances of one or more objects present in a video. Confidence thresholds, line placement, objects list, etc are customizable to make it as generic as possible
+  
+![counting_input](https://user-images.githubusercontent.com/30727381/123505490-0189db80-d67d-11eb-9c0f-9077c470fa08.png)
+![counting_output](https://user-images.githubusercontent.com/30727381/123505493-051d6280-d67d-11eb-94d5-cce437d10b8b.png)
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
-A simple program to count the number of instances of one or more objects present in a video
 
 
 ### Built With
@@ -42,7 +45,7 @@ A simple program to count the number of instances of one or more objects present
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get a local copy up and running:.
+To get a local copy up and running:
 
 ### Prerequisites
 
@@ -60,19 +63,19 @@ To get a local copy up and running:.
 
 ### Usage
 
-1. If you have the above mentioned prerequisites and have followed the installation steps then you can run this command 
+1. If you have the above-mentioned prerequisites and have followed the installation steps then you can run this command 
       - `python main.py count_objects_in_video`
 2. If you want to pass any arguments to the script, you can do pass them like this
       - `python main.py count_objects_in_video --input_video_path='/some/custom/path`
       - `python main.py count_objects_in_video --line_coords='[(x1, y1,), (x2, y2)]'`
       - `python main.py count_objects_in_video --output_json_path='/some/custom/path/output.json`
       - `python main.py count_objects_in_video --objects_to_count='["object1", "object2", "object3"]`
-3. To list all possible arguments alogn with their default values:
+3. To list all possible arguments along with their default values:
       - `python main.py -- --help`
 
 ### Contributing
 
-Coming Soon....
+Coming Soon...
 
 ### License
 
